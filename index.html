@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчеты</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #222;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .timer {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📊 Отчеты</h1>
+
+<div class="box">
+    <div class="title">Отчет до 25.05.2026 09:00 (Казахстан)</div>
+    <div id="timer1" class="timer"></div>
+</div>
+
+<div class="box">
+    <div class="title">Отчет до 25.05.2026 18:00 (Казахстан)</div>
+    <div id="timer2" class="timer"></div>
+</div>
+
+<script>
+function countdown(id, targetTime) {
+    function update() {
+        const now = new Date().getTime();
+        const distance = targetTime - now;
+
+        if (distance <= 0) {
+            document.getElementById(id).innerHTML = "⛔ Время вышло";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((distance / (1000 * 60)) % 60);
+        const seconds = Math.floor((distance / 1000) % 60);
+
+        document.getElementById(id).innerHTML =
+            days + "д " + hours + "ч " + minutes + "м " + seconds + "с";
+    }
+
+    update();
+    setInterval(update, 1000);
+}
+
+// Казахстан UTC+5 → перевод в UTC:
+// 09:00 KZ = 04:00 UTC
+// 18:00 KZ = 13:00 UTC
+countdown("timer1", new Date("2026-05-25T04:00:00Z").getTime());
+countdown("timer2", new Date("2026-05-25T13:00:00Z").getTime());
+</script>
+
+</body>
+</html>
